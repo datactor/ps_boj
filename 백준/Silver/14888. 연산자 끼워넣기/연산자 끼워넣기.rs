@@ -1,7 +1,6 @@
-use std::io::{self, prelude::*, BufWriter, StdoutLock};
+use std::io::{self, prelude::*};
 
 fn main() {
-    let mut output = BufWriter::new(io::stdout().lock());
     let mut buffer = String::new();
     io::stdin().read_to_string(&mut buffer).unwrap();
 
@@ -22,8 +21,7 @@ fn main() {
     }
 
     solve(&nums, &mut operators, nums[0], 1, &mut result);
-    
-    writeln!(output, "{}\n{}", result.max, result.min).unwrap();
+    println!("{}\n{}", result.max, result.min);
 }
 
 struct Result {
