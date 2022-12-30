@@ -10,8 +10,7 @@ fn main() {
     let n = lines.next().unwrap().parse::<usize>().unwrap();
     let f = lines.next().unwrap().parse::<usize>().unwrap();
 
-    let mut arr = Vec::with_capacity(n);
-    arr.insert(0, vec![f]);
+    let mut arr = vec![f];
 
     for i in 1..n {
         let mut tmp = Vec::new();
@@ -20,14 +19,14 @@ fn main() {
 
         for j in 0..v.len() {
             if j == 0 {
-                tmp.push(v[j] + arr[i-1][j])
+                tmp.push(v[j] + arr[j])
             } else if j == v.len() - 1 {
-                tmp.push(v[j] + arr[i-1][j-1])
+                tmp.push(v[j] + arr[j-1])
             } else {
-                tmp.push((v[j] + arr[i-1][j-1]).max(v[j] + arr[i-1][j]));
+                tmp.push((v[j] + arr[j-1]).max(v[j] + arr[j]));
             }
         }
-        arr.push(tmp);
+        arr = tmp;
     }
-    writeln!(output, "{}", arr[n-1].iter().max().unwrap()).unwrap();
+    writeln!(output, "{}", arr.iter().max().unwrap()).unwrap();
 }
