@@ -13,7 +13,7 @@ fn main() {
     if v.len() == 1 {
         writeln!(output, "{}", v[0]).unwrap();
     } else if v.len() == 2 {
-        writeln!(output, "{}", v[..2].iter().sum::<usize>()).unwrap();
+        writeln!(output, "{}", v[1] + v[2]).unwrap();
     } else {
         arr[0] = v[0];
         arr[1] = v[0] + v[1];
