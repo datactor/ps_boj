@@ -5,7 +5,7 @@ fn main() {
     let mut buffer = String::new();
     io::stdin().read_to_string(&mut buffer).unwrap();
 
-    let mut v = buffer.split_ascii_whitespace().skip(1).map(
+    let v = buffer.split_ascii_whitespace().skip(1).map(
         |s| s.parse::<usize>().unwrap()).collect::<Vec<usize>>();
 
     let mut arr = vec![0; v.len()];
@@ -13,7 +13,7 @@ fn main() {
     if v.len() == 1 {
         writeln!(output, "{}", v[0]).unwrap();
     } else if v.len() == 2 {
-        writeln!(output, "{}", v[0] + v[1]).unwrap();
+        writeln!(output, "{}", v[..2].iter().sum::<usize>()).unwrap();
     } else {
         arr[0] = v[0];
         arr[1] = v[0] + v[1];
