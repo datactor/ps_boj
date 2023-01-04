@@ -13,24 +13,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut arr = vec![0; v[1].len()];
 
     for i in 0..v[0].len() {
-        let mut idx = 0;
+        let mut cnt = 0;
         for j in 0..v[1].len() {
-            if idx < arr[j] {
-                idx = arr[j]
+            if cnt < arr[j] {
+                cnt = arr[j]
             } else if v[0][i] == v[1][j] {
-                arr[j] = idx + 1
+                arr[j] = cnt + 1
             }
         }
     }
-    
-    println!("{}", arr.iter().max().unwrap());
-    /////////////////////////////
-    /////////////////////////////
-    /////////////////////////////
-    /////////////////////////////
-    /////////////////////////////
-    /////////////////////////////
-    /////////////////////////////
 
+    println!("{}", arr.iter().max().unwrap());
     Ok(())
 }
