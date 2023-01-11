@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut res: Vec<i64> = vec![0; m];
 
     let mut total = 0;
-    for i in 0..n {
+    for _ in 0..n {
         total += v.next().unwrap();
         res[total % m] += 1;
     }
