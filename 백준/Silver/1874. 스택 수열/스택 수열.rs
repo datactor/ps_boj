@@ -21,8 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             a.push(x);
             writeln!(input, "+").unwrap();
         }
-        if a[a.len()-1] == v[i] {
-            a.pop();
+        if a.pop() == Some(v[i]) {
             writeln!(input, "-").unwrap();
         } else {
             input.clear();
