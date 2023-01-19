@@ -1,7 +1,6 @@
 use std::{
     io::{self, prelude::*, BufWriter},
     error::Error,
-    collections::VecDeque,
 };
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -16,7 +15,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         (v.next().unwrap().parse::<usize>().unwrap(),
          v.next().unwrap().parse::<usize>().unwrap());
 
-    let mut deck: VecDeque<usize> = (1..n+1).map(|s| s).collect();
+    let mut deck: Vec<usize> = (1..n+1).map(|s| s).collect();
 
     let mut idx = k;
     while deck.len() > 1 {
