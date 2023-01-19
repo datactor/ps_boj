@@ -10,7 +10,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     write!(output, "<")?;
 
     let mut v = input.split_ascii_whitespace().map(|s| s.parse::<usize>().unwrap());
-
     let (n, k) =
         (v.next().unwrap(),
          v.next().unwrap());
@@ -20,7 +19,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut idx = k;
     while m.len() > 1 {
         if idx <= m.len() {
-            write!(output, "{}, ", m[idx-1]);
+            write!(output, "{}, ", m[idx-1])?;
             m.remove(idx-1);
             idx += k-1
         } else {
@@ -30,7 +29,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
     }
-
     write!(output, "{}>", m[0])?;
     Ok(())
 }
