@@ -9,27 +9,28 @@ fn main() -> Result<(), Box<dyn Error>> {
     io::stdin().read_line(&mut input)?;
     write!(output, "<")?;
 
-    let mut v = input.split_ascii_whitespace();
+    let mut v = input.split_ascii_whitespace().map(|s| s.parse::<usize>().unwrap());
 
     let (n, k) =
-        (v.next().unwrap().parse::<usize>().unwrap(),
-         v.next().unwrap().parse::<usize>().unwrap());
+        (v.next().unwrap(),
+         v.next().unwrap());
 
-    let mut deck: Vec<usize> = (1..n+1).map(|s| s).collect();
+    let mut m: Vec<usize> = (1..n+1).map(|s| s).collect();
 
     let mut idx = k;
-    while deck.len() > 1 {
-        if idx <= deck.len() {
-            write!(output, "{}, ", deck[idx - 1]);
-            deck.remove(idx - 1);
-            idx += k - 1
+    while m.len() > 1 {
+        if idx <= m.len() {
+            write!(output, "{}, ", m[idx-1]);
+            m.remove(idx-1);
+            idx += k-1
         } else {
-            while idx > deck.len() {
-                idx -= deck.len();
+            match idx % m.len() {
+                0 => idx = m.len(),
+                _ => idx %= m.len(),
             }
         }
     }
 
-    write!(output, "{}>", deck[0])?;
+    write!(output, "{}>", m[0])?;
     Ok(())
 }
