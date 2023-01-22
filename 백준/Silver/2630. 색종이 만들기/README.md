@@ -14,7 +14,7 @@
 
 <p>아래 <그림 1>과 같이 여러개의 정사각형칸들로 이루어진 정사각형 모양의 종이가 주어져 있고, 각 정사각형들은 하얀색으로 칠해져 있거나 파란색으로 칠해져 있다. 주어진 종이를 일정한 규칙에 따라 잘라서 다양한 크기를 가진 정사각형 모양의 하얀색 또는 파란색 색종이를 만들려고 한다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="height:221px; width:215px"></p>
+<p style="text-align: center;"><img alt="" src="https://www.acmicpc.net/upload/images/bwxBxc7ghGOedQfiT3p94KYj1y9aLR.png" style="height:221px; width:215px"></p>
 
 <p>전체 종이의 크기가 N×N(N=2<sup>k</sup>, k는 1 이상 7 이하의 자연수) 이라면 종이를 자르는 규칙은 다음과 같다.</p>
 
@@ -22,7 +22,7 @@
 
 <p>위와 같은 규칙에 따라 잘랐을 때 <그림 3>은 <그림 1>의 종이를 처음 나눈 후의 상태를, <그림 4>는 두 번째 나눈 후의 상태를, <그림 5>는 최종적으로 만들어진 다양한 크기의 9장의 하얀색 색종이와 7장의 파란색 색종이를 보여주고 있다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="height:488px; width:487px"></p>
+<p style="text-align: center;"><img alt="" src="https://www.acmicpc.net/upload/images/VHJpKWQDv.png" style="height:488px; width:487px"></p>
 
 <p>입력으로 주어진 종이의 한 변의 길이 N과 각 정사각형칸의 색(하얀색 또는 파란색)이 주어질 때 잘라진 하얀색 색종이와 파란색 색종이의 개수를 구하는 프로그램을 작성하시오.</p>
 

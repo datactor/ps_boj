@@ -3,28 +3,20 @@ use std::{
     error::Error,
 };
 
-static mut W: usize = 0;
-static mut B: usize = 0;
-
 fn main () -> Result<(), Box<dyn Error>> {
     let mut input = String::new();
     io::stdin().read_to_string(&mut input)?;
-
     let mut lines = input.lines();
-
     let mut n = lines.next().unwrap().parse::<usize>().unwrap();
-
     let v: Vec<Vec<usize>> = (0..n).map(|_| lines.next().unwrap().split_ascii_whitespace()
         .map(|s| s.parse::<usize>().unwrap()).collect()).collect();
 
-    unsafe {
-        div_conq(0, 0, n, &v);
-        println!("{}\n{}", W, B);
-    }
+    let (w, b) = dc(0, 0, n, &v);
+    print!("{}\n{}", w, b);
     Ok(())
 }
 
-unsafe fn div_conq(x: usize, y: usize, n: usize, v: &Vec<Vec<usize>>) {
+fn dc(x: usize, y: usize, n: usize, v: &Vec<Vec<usize>>) -> (usize, usize) {
     let mut tmp = 0;
     for i in x..x+n {
         for j in y..y+n {
@@ -33,15 +25,16 @@ unsafe fn div_conq(x: usize, y: usize, n: usize, v: &Vec<Vec<usize>>) {
             }
         }
     }
+
     if tmp == 0 {
-        W += 1;
+        return (1, 0)
     } else if tmp == n.pow(2) {
-        B += 1;
+        return (0, 1)
     } else {
-        div_conq(x, y, n / 2, v);
-        div_conq(x + n / 2, y, n / 2, v);
-        div_conq(x, y + n / 2, n / 2, v);
-        div_conq(x + n/2, y + n / 2, n / 2, v);
+        let (w1, b1) = dc(x, y, n/2, v);
+        let (w2, b2) = dc(x+n/2, y, n/2, v);
+        let (w3, b3) = dc(x, y+n/2, n/2, v);
+        let (w4, b4) = dc(x+n/2, y+n/2, n/2, v);
+        return (w1 + w2 + w3 + w4, b1 + b2 + b3 + b4)
     }
-    return
 }
