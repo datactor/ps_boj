@@ -14,7 +14,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     loop {
         let mut v = lines.next().unwrap().split_ascii_whitespace()
             .map(|s| s.parse::<usize>()).flatten();
-        let n = v.next().unwrap() as usize;
+        let n = v.next().unwrap();
         if n == 0 {
             break
         }
@@ -22,10 +22,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut answer = 0;
 
         let mut stack = VecDeque::new();
+        let mut width = 0;
         for i in 0..n {
-            while !stack.is_empty() && x[*stack.back().unwrap() as usize] > x[i] {
+            while !stack.is_empty() && x[*stack.back().unwrap()] > x[i] {
                 let tmp = stack.pop_back().unwrap();
-                let mut width = 0;
 
                 if stack.is_empty() {
                     width = i;
@@ -33,18 +33,18 @@ fn main() -> Result<(), Box<dyn Error>> {
                     width = i - stack.back().unwrap() - 1;
                 }
 
-                answer = usize::max(answer, width as usize * x[tmp]);
+                answer = usize::max(answer, width * x[tmp]);
             }
             stack.push_back(i)
         }
         while !stack.is_empty() {
             let tmp = stack.pop_back().unwrap();
-            let mut width = 0;
+            
             if stack.is_empty() {
                 width = n;
             } else {
                 width = n - stack.back().unwrap() - 1;
-            } answer = usize::max(answer, width as usize * x[tmp])
+            } answer = usize::max(answer, width * x[tmp])
         }
 
         writeln!(output, "{}", answer)?;
