@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                         loop {
                             let pop: (i32, i32) = hq.pop().unwrap();
 
-                            tmp.push((pop.1 * -1, pop.0));
+                            tmp.push((-pop.1, pop.0));
 
                             if hq.peek() == None || pop.0 != hq.peek().unwrap().0 {
                                 break
@@ -34,7 +34,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                         writeln!(output, "{}", tmp.pop().unwrap().0 * -1)?;
 
                         for (minus_val, abs) in tmp {
-                            hq.push((abs, minus_val * -1));
+                            hq.push((abs, -minus_val));
                         }
                     }
                 }
