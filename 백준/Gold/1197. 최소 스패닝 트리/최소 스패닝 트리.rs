@@ -15,11 +15,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let (v, e) = (read(), read());
 
     let mut graph = vec![vec![]; (v + 1) as usize];
-    for _ in (0..e) {
+    (0..e).for_each(|_| {
         let (u, v, w) = (read(), read(), read());
         graph[u as usize].push((v, w));
         graph[v as usize].push((u, w));
-    };
+    });
 
     println!("{}", prim(1, 0, graph, v as usize));
 
@@ -40,8 +40,6 @@ fn prim(start: usize, weight: i32, graph: Vec<Vec<(i32, i32)>>, n: usize) -> i32
         visited[v] = 1;
         sum -= k;
         cnt += 1;
-        for (u, w) in &graph[v] {
-            q.push((w*-1, *u as usize))
-        }
+        graph[v].iter().for_each(|&(u, w)| q.push((-w, u as usize)));
     } sum
 }
