@@ -15,7 +15,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     while left <= right {
         let mut sum = 0;
-        let mut mid = (left + right) / 2;
+        let mid = (left + right) / 2;
         for i in &v {
             if i - mid > 0 {
                 sum += i - mid;
