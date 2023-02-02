@@ -9,14 +9,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut input = input.split_ascii_whitespace().skip(1).map(|s| s.parse::<i32>().unwrap());
     let m = input.next().unwrap();
-    let mut v: Vec<i32> = input.collect();
+    let v: Vec<i32> = input.collect();
     
     let (mut left, mut right) = (0, 999_999_999);
-    let mut mid = 0;
 
     while left <= right {
         let mut sum = 0;
-        mid = (left + right) / 2;
+        let mut mid = (left + right) / 2;
         for i in &v {
             if i - mid > 0 {
                 sum += i - mid;
