@@ -19,89 +19,78 @@ impl<'a> Scanner<'a> {
     }
 }
 
+struct Lis {
+    arr: Vec<i32>,
+    val_and_len: Vec<(i32, usize)>,
+}
 
-// struct List {
-//     arr: Vec<i32>,
-//     val_and_len: Vec<(i32, usize)>,
-// }
-//
-// impl List {
-//     fn new() {
-//
-//     }
-// }
+impl Lis {
+    fn new() -> Self {
+        Lis {
+            arr: vec![-1_000_000_001],
+            val_and_len: vec![(-1_000_000_001, 0)],
+        }
+    }
+
+    fn cal_bisec(&mut self, mut v: VecDeque<i32>) {
+        while !v.is_empty() {
+            let num = v.pop_front().unwrap();
+
+            if &num > self.arr.last().unwrap() {
+                self.val_and_len.push((num, self.arr.len()));
+                self.arr.push(num);
+            } else {
+                // bisec
+                let idx = {
+                    let mut low = -1;
+                    let mut high = self.arr.len() as i32;
+
+                    while low + 1 < high {
+                        let mid = (low + high) / 2;
+                        if &num > &self.arr[mid as usize] {
+                            low = mid as i32
+                        } else {
+                            high = mid
+                        }
+                    } high as usize
+                };
+
+                self.arr[idx] = num;
+                self.val_and_len.push((num, idx));
+            }
+        }
+    }
+}
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut input = String::new();
-    let mut output = BufWriter::new(io::stdout().lock());
     io::stdin().read_to_string(&mut input)?;
 
-    // let mut input = input.split_ascii_whitespace().map(|s| s.parse::<i32>().unwrap());
+    let mut scanner = Scanner::new(&input);
+    let n = scanner.read::<usize>();
+    let v: VecDeque<i32> =(0..n).map(|_| scanner.read()).collect();
+    input.clear();
 
-    let mut sc = Scanner::new(&input);
-    let n = sc.read::<usize>();
-    let mut v: VecDeque<i32> =(0..n).map(|_| sc.read()).collect();
+    let mut lis = Lis::new();
 
-    // let n = input.next().unwrap() as usize;
-    // let mut v: VecDeque<i32> = input.take(n).collect();
+    lis.cal_bisec(v);
 
-    let mut lis_arr = vec![-1_000_000_001];
-    let mut lis_total = vec![(-1_000_000_001, 0)];
+    let mut result_len = lis.arr.len() - 1;
+    let mut result = Vec::new();
 
-
-    while !v.is_empty() {
-        let num = v.pop_front().unwrap();
-
-        if &num > lis_arr.last().unwrap() {
-            lis_total.push((num, lis_arr.len()));
-            lis_arr.push(num);
-        } else {
-            let idx = bisec(&mut lis_arr, num);
-            lis_arr[idx] = num;
-            lis_total.push((num, idx));
+    while !lis.val_and_len.is_empty() && result_len > 0 {
+        let (num, idx) = lis.val_and_len.pop().unwrap();
+        if idx == result_len {
+            result.push(num);
+            result_len -= 1;
         }
     }
 
-    let mut lis_len = lis_arr.len() - 1;
-    let mut lis = Vec::new();
-
-    while !lis_total.is_empty() && lis_len > 0 {
-        let (num, idx) = lis_total.pop().unwrap();
-        if idx == lis_len {
-            lis.push(num);
-            lis_len -= 1;
-        }
-    }
-
-    writeln!(output, "{}", lis.len())?;
-    lis.iter().rev().for_each(|s| write!(output, "{} ", s).unwrap());
+    let mut output = BufWriter::new(io::stdout().lock());
+    writeln!(output, "{}", result.len()).unwrap();
+    result
+        .iter().rev()
+        .for_each(|s| write!(output, "{} ", s).unwrap());
 
     Ok(())
 }
-
-fn bisec(lis_arr: &mut Vec<i32>, num: i32) -> usize {
-    let mut low = -1;
-    let mut high = lis_arr.len() as i32;
-
-    while low + 1 < high {
-        let mid = (low + high) / 2;
-        if num > lis_arr[mid as usize] {
-            low = mid as i32
-        } else {
-            high = mid
-        }
-    } high as usize
-}
-
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
