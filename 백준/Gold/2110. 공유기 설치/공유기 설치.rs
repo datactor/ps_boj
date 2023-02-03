@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut nodes: Vec<i32> = (0..n).map(|_| scanner.read::<i32>()).collect();
     nodes.sort();
 
-    let mut max = (nodes[n-1] - nodes[0]) / (c-1);
+    let max = (nodes[n-1] - nodes[0]) / (c-1);
     let (mut left, mut right) = (1, max);
 
     while left <= right {
