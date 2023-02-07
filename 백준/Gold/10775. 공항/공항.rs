@@ -37,13 +37,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     io::stdin().read_to_string(&mut input)?;
 
     let mut scanner = Scanner::new(&input);
-    let g = scanner.read::<usize>();
-    let planes: Vec<usize> = scanner.input.skip(1).map(|s| s.parse::<usize>().unwrap()).collect();
+    let (g, p) = (scanner.read::<usize>(), scanner.read::<usize>());
 
     let mut parents: Vec<usize> = (0..g+1).map(|i| i).collect();
     let mut cnt = 0;
 
-    for plane in planes {
+    for _ in 0..p {
+        let plane = scanner.read::<usize>();
         let tmp = find(plane, &mut parents);
         if tmp == 0 {
             break
