@@ -39,18 +39,19 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut scanner = Scanner::new(&input);
     let (g, p) = (scanner.read::<usize>(), scanner.read::<usize>());
 
-    let mut parents: Vec<usize> = (0..g+1).map(|i| i).collect();
+    let mut gates: Vec<usize> = (0..g+1).map(|i| i).collect();
     let mut cnt = 0;
 
     for _ in 0..p {
-        let plane = scanner.read::<usize>();
-        let tmp = find(plane, &mut parents);
-        if tmp == 0 {
+        let gi = scanner.read::<usize>();
+        let plane = find(gi, &mut gates);
+        if plane == 0 {
             break
         }
-        union(tmp-1, tmp, &mut parents);
+        union(plane-1, plane, &mut gates);
         cnt += 1;
     }
+
     println!("{cnt}");
 
     Ok(())
