@@ -39,5 +39,5 @@ fn prime_list(n: usize) -> Vec<usize> {
             }
         }
     }
-    return (2..=n).filter_map(|i| (sieve[i] == true).then(|| i)).collect::<Vec<_>>();
+    return (2..=n).filter_map(|i| sieve[i].then(|| i)).collect::<Vec<_>>();
 }
