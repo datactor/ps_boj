@@ -30,21 +30,26 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let (n, l, r) = (sc.read::<usize>(), sc.read::<usize>(), sc.read::<usize>());
 
-    let mut s = vec![vec![vec![0; r + 1]; l + 1]; n + 1];
-    s[1][1][1] = 1;
+    let mut dp = vec![vec![0; r + 1]; l + 1];
+    dp[1][1] = 1;
+
+    let mut prev_dp = dp.clone();
 
     for i in 2..=n {
         for j in 1..=l {
             for k in 1..=r {
-                s[i][j][k] = ((s[i - 1][j][k] * (i - 2)) % MOD
-                    + s[i - 1][j][k - 1]
-                    + s[i - 1][j - 1][k])
-                    % MOD;
+                dp[j][k] =
+                    (
+                        (prev_dp[j][k] * (i-2)) % MOD
+                            + prev_dp[j][k-1]
+                            + prev_dp[j-1][k]
+                ) % MOD;
             }
         }
+        prev_dp = dp.clone();
     }
 
-    writeln!(output, "{}", s[n][l][r])?;
+    writeln!(output, "{}", dp[l][r])?;
 
     Ok(())
 }
