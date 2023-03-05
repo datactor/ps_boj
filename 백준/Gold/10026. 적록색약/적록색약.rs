@@ -11,14 +11,14 @@ fn main() {
     io::stdin().read_to_string(&mut input).unwrap();
 
     let mut lines = input.lines();
+    
+    let mut read = || lines.next().unwrap();
+    let n = read().parse::<usize>().unwrap();
 
-    let n = lines.next().unwrap().parse::<usize>().unwrap();
-    let mut read = || lines.next().unwrap().as_bytes().to_owned();
-
-    let mut graph = Vec::new();
+    let mut graph = Vec::with_capacity(n);
 
     for _ in 0..n {
-        graph.push(read().to_owned());
+        graph.push(read().as_bytes().to_owned());
     }
 
     let mut cont_graph = graph.clone();
