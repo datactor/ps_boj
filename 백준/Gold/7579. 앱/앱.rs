@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mem: Vec<usize> = (0..n).map(|_| sc.read::<usize>()).collect();
     let costs: Vec<usize> = (0..n).map(|_| sc.read::<usize>()).collect();
 
-    let mut dp = vec![0; 10001];
+    let mut dp = [0; 10001];
     dp[costs[0]] = mem[0];
 
     for i in 1..n {
@@ -48,12 +48,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    for i in 0..10001 {
-        if dp[i] >= m {
-            writeln!(output, "{}", i)?;
-            break
-        }
-    }
+    writeln!(output, "{}", dp.iter().position(|&cost| cost >= m).unwrap())?;
 
     Ok(())
 }
