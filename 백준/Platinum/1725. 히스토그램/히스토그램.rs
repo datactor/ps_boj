@@ -30,28 +30,26 @@ fn main() -> io::Result<()> {
     let mut stack = Vec::with_capacity(n);
     for i in 0..n {
         while !stack.is_empty() && table[*stack.last().unwrap()] > table[i] {
-            let tmp = stack.pop().unwrap();
-
+            let height = table[stack.pop().unwrap()];
             let width = if let Some(last) = stack.last() {
                 i - last - 1
             } else { i };
-            
-            ans = usize::max(ans, width * table[tmp]);
+
+            ans = usize::max(ans, width * height);
         }
         stack.push(i);
     }
 
     while !stack.is_empty() {
-        let tmp = stack.pop().unwrap();
-
+        let height = table[stack.pop().unwrap()];
         let width = if let Some(last) = stack.last() {
             n - last - 1
         } else { n };
-        
-        ans = usize::max(ans, width * table[tmp])
+
+        ans = usize::max(ans, width * height)
     }
 
-    writeln!(output, "{}", ans)?;
+    write!(output, "{}", ans)?;
 
     Ok(())
 }
