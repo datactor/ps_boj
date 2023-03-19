@@ -1,4 +1,3 @@
-use std::collections::VecDeque;
 use std::io::{self, prelude::*, BufWriter};
 
 struct Scanner<'a> {
@@ -29,27 +28,28 @@ fn main() -> io::Result<()> {
 
     let mut ans = 0;
 
-    let mut dq = VecDeque::new();
+    let mut stack = Vec::with_capacity(n);
     for i in 0..n {
-        while !dq.is_empty() && table[*dq.back().unwrap()] > table[i] {
-            let tmp = dq.pop_back().unwrap();
+        while !stack.is_empty() && table[*stack.last().unwrap()] > table[i] {
+            let tmp = stack.pop().unwrap();
 
-            let width = if dq.is_empty() {
+            let width = if stack.is_empty() {
                 i
             } else {
-                i - dq.back().unwrap() - 1
+                i - stack.last().unwrap() - 1
             };
             ans = usize::max(ans, width * table[tmp]);
         }
-        dq.push_back(i);
+        stack.push(i);
     }
-    while !dq.is_empty() {
-        let tmp = dq.pop_back().unwrap();
 
-        let width = if dq.is_empty() {
+    while !stack.is_empty() {
+        let tmp = stack.pop().unwrap();
+
+        let width = if stack.is_empty() {
             n
         } else {
-            n - dq.back().unwrap() - 1
+            n - stack.last().unwrap() - 1
         };
         ans = usize::max(ans, width * table[tmp])
     }
