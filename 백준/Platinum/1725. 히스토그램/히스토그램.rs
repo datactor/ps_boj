@@ -23,7 +23,6 @@ fn main() -> io::Result<()> {
 
     let mut sc = Scanner::new(&input);
     let n = sc.read::<usize>();
-
     let table: Vec<usize> = (0..n).map(|_| sc.read::<usize>()).collect();
 
     let mut ans = 0;
@@ -33,11 +32,10 @@ fn main() -> io::Result<()> {
         while !stack.is_empty() && table[*stack.last().unwrap()] > table[i] {
             let tmp = stack.pop().unwrap();
 
-            let width = if stack.is_empty() {
-                i
-            } else {
-                i - stack.last().unwrap() - 1
-            };
+            let width = if let Some(last) = stack.last() {
+                i - last - 1
+            } else { i };
+            
             ans = usize::max(ans, width * table[tmp]);
         }
         stack.push(i);
@@ -46,11 +44,10 @@ fn main() -> io::Result<()> {
     while !stack.is_empty() {
         let tmp = stack.pop().unwrap();
 
-        let width = if stack.is_empty() {
-            n
-        } else {
-            n - stack.last().unwrap() - 1
-        };
+        let width = if let Some(last) = stack.last() {
+            n - last - 1
+        } else { n };
+        
         ans = usize::max(ans, width * table[tmp])
     }
 
