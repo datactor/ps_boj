@@ -15,14 +15,15 @@ fn main() -> io::Result<()> {
     let mut ans = 0;
 
     for h in heights {
-        while let Some((top, cnt)) = stack.pop() {
-            if top < h {
-                ans += cnt as u64;
+        while let Some((prev_h, prev_cnt)) = stack.pop() {
+            if prev_h < h {
+                ans += prev_cnt as u64;
             } else {
-                stack.push((top, cnt));
+                stack.push((prev_h, prev_cnt));
                 break;
             }
         }
+
         let mut cnt = 1;
         if let Some((top, top_cnt)) = stack.last_mut() {
             if *top == h {
