@@ -7,25 +7,25 @@ fn main() -> io::Result<()> {
     let mut output = BufWriter::new(io::stdout().lock());
     io::stdin().lock().read_line(&mut input)?;
 
-    let line = input.split_ascii_whitespace().map(|s| s.parse::<f64>().unwrap()).collect::<Vec<f64>>();
+    let line = input.split_ascii_whitespace().map(|s| s.parse::<i32>().unwrap()).collect::<Vec<i32>>();
 
     let (x, y, d, t) = (line[0], line[1], line[2], line[3]);
 
-    let mut dist = (x.powf(2.0) + y.powf(2.0)).sqrt();
+    let dist = ((x.pow(2) + y.pow(2)) as f64).sqrt();
 
     writeln!(output, "{:.9}",
              if d <= t {
                  dist
              } else {
-                 let jump = (dist / d).floor();
                  let mut min_time = dist;
+                 let jump = (dist / d as f64).floor() as i32;
 
-                 dist -= jump * d;
+                 let remaining_dist = dist - jump as f64 * d as f64;
 
-                 if jump == 0.0 {
-                     min_time = min_time.min(f64::min(t + d - dist, 2.0 * t));
+                 if jump == 0 {
+                     min_time = min_time.min(f64::min(t as f64 + d as f64 - remaining_dist, 2.0 * t as f64));
                  } else {
-                     min_time = min_time.min(f64::min(jump * t + dist, (jump + 1.0) * t));
+                     min_time = min_time.min(f64::min(jump as f64 * t as f64 + remaining_dist, (jump as f64 + 1.0) * t as f64));
                  }
                  min_time
              }
